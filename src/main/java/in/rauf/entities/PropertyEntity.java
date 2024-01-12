@@ -9,8 +9,8 @@ import java.time.Instant;
 import java.util.List;
 
 @Entity
-@Table(name = "buildings")
-public class BuildingEntity {
+@Table(name = "properties")
+public class PropertyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,7 @@ public class BuildingEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
     private List<TaskEntity> projects;
 
     @CreationTimestamp

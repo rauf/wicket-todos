@@ -37,8 +37,8 @@ public class TaskEntity {
     private Date dueDate;
 
     @ManyToOne
-    @JoinColumn(name = "building_id")
-    private BuildingEntity building;
+    @JoinColumn(name = "property_id")
+    private PropertyEntity property;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -97,12 +97,12 @@ public class TaskEntity {
         this.dueDate = dueDate;
     }
 
-    public BuildingEntity getBuilding() {
-        return building;
+    public PropertyEntity getProperty() {
+        return property;
     }
 
-    public void setBuilding(BuildingEntity building) {
-        this.building = building;
+    public void setProperty(PropertyEntity property) {
+        this.property = property;
     }
 
     public Instant getCreatedAt() {
