@@ -3,20 +3,12 @@ package in.rauf.entities;
 import in.rauf.models.TaskPriority;
 import in.rauf.models.TaskStatus;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Entity
 @Table(name = "tasks")
-public class TaskEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+public class TaskEntity extends BaseEntity {
 
     @Column(name = "name")
     private String name;
@@ -40,22 +32,6 @@ public class TaskEntity {
     @JoinColumn(name = "property_id")
     private PropertyEntity property;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Instant updatedAt;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -103,21 +79,5 @@ public class TaskEntity {
 
     public void setProperty(PropertyEntity property) {
         this.property = property;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
