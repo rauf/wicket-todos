@@ -3,6 +3,7 @@ package in.rauf.components.navbar;
 
 import in.rauf.pages.about.AboutPage;
 import in.rauf.pages.home.HomePage;
+import in.rauf.pages.task.TaskManagementPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 
@@ -22,6 +23,13 @@ public class Navbar extends Panel {
             @Override
             public void onClick() {
                 setResponsePage(AboutPage.class);
+            }
+        });
+
+        add(new Link<Void>("taskManagementPageLink") {
+            @Override
+            public void onClick() {
+                setResponsePage(TaskManagementPage.class);
             }
         });
 
