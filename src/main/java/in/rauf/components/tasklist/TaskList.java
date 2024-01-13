@@ -11,9 +11,10 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TaskList extends Panel {
+public class TaskList extends Panel implements Serializable {
 
     public static final String NOT_ASSIGNED = "-";
 
@@ -28,9 +29,9 @@ public class TaskList extends Panel {
             protected void populateItem(ListItem<Task> item) {
                 var task = item.getModelObject();
 
-                var assignedTo = task.getAssignedToUserId() != null ? task.getAssignedToUserId() : NOT_ASSIGNED;
+                var assignedTo = task.getUser() != null ? task.getUser() : NOT_ASSIGNED;
                 var dueDate = task.getDueDate() != null ? task.getDueDate().toString() : NOT_ASSIGNED;
-                var buildingId = task.getBuildingId() != null ? task.getBuildingId().toString() : NOT_ASSIGNED;
+                var buildingId = task.getProperty() != null ? task.getProperty().toString() : NOT_ASSIGNED;
 
 //                item.add(new Label("taskId", task.getId().toString()));
                 item.add(new Label("taskName", task.getName()));

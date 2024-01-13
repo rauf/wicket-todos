@@ -17,7 +17,6 @@
 package in.rauf;
 
 import in.rauf.dao.TaskDao;
-import in.rauf.entities.TaskEntity;
 import org.apache.wicket.protocol.ws.javax.WicketServerEndpointConfig;
 import org.eclipse.jetty.jmx.MBeanContainer;
 import org.eclipse.jetty.server.*;
@@ -43,7 +42,7 @@ public class Start {
     public static void main(String[] args) throws Exception {
         System.setProperty("wicket.configuration", "development");
 
-        new TaskDao().persist(new TaskEntity());
+        new TaskDao();
 
         Server server = new Server();
 

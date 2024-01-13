@@ -1,17 +1,18 @@
 package in.rauf.models;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 
-public class Task {
+public class Task implements Serializable {
 
     private Long id;
     private String name;
     private TaskStatus status;
     private TaskPriority priority;
-    private Long assignedToUserId;
+    private String user;
     private Date dueDate;
-    private Long buildingId;
+    private String property;
     private Instant createdAt;
     private Instant updatedAt;
 
@@ -20,15 +21,15 @@ public class Task {
     }
 
     public Task(Long id, String name, TaskStatus status, TaskPriority priority,
-                Long assignedToUserId, Date dueDate, Long buildingId,
+                String assignedToUserId, Date dueDate, String buildingId,
                 Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.priority = priority;
-        this.assignedToUserId = assignedToUserId;
+        this.user = assignedToUserId;
         this.dueDate = dueDate;
-        this.buildingId = buildingId;
+        this.property = buildingId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -66,13 +67,6 @@ public class Task {
         this.priority = priority;
     }
 
-    public Long getAssignedToUserId() {
-        return assignedToUserId;
-    }
-
-    public void setAssignedToUserId(Long assignedToUserId) {
-        this.assignedToUserId = assignedToUserId;
-    }
 
     public Date getDueDate() {
         return dueDate;
@@ -82,12 +76,20 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Long getBuildingId() {
-        return buildingId;
+    public String getUser() {
+        return user;
     }
 
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public void setProperty(String property) {
+        this.property = property;
     }
 
     public Instant getCreatedAt() {
