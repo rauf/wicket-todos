@@ -5,12 +5,12 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 
 public class PropertyChoiceRenderer implements IChoiceRenderer<Property> {
     @Override
-    public Object getDisplayValue(Property object) {
-        return object.name();
+    public Object getDisplayValue(Property property) {
+        return property.name();
     }
 
     @Override
-    public String getIdValue(Property object, int index) {
-        return object.id().toString();
+    public String getIdValue(Property property, int index) {
+        return property.id().toString();
     }
 }

@@ -3,9 +3,10 @@ package in.rauf.services;
 import in.rauf.dao.UserDao;
 import in.rauf.models.User;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class UserService {
+public class UserService implements Serializable {
 
     private final UserDao userDao;
 

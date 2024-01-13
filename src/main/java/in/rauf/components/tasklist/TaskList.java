@@ -1,8 +1,7 @@
 package in.rauf.components.tasklist;
 
 import in.rauf.models.Task;
-import in.rauf.models.TaskPriority;
-import in.rauf.models.TaskStatus;
+import in.rauf.utils.DateUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
@@ -17,6 +16,12 @@ import java.util.List;
 public class TaskList extends Panel implements Serializable {
 
     public static final String NOT_ASSIGNED = "-";
+    public static final String TASK_PRIORITY = "taskPriority";
+    public static final String TASK_STATUS = "taskStatus";
+    public static final String TASK_ASSIGNED_TO = "taskAssignedTo";
+    public static final String TASK_PROPERTY = "taskProperty";
+    public static final String TASK_DUE_DATE = "taskDueDate";
+    public static final String TASK_NAME = "taskName";
 
     public TaskList(String id, IModel<List<Task>> taskListModel) {
         super(id, taskListModel);
@@ -29,41 +34,58 @@ public class TaskList extends Panel implements Serializable {
             protected void populateItem(ListItem<Task> item) {
                 var task = item.getModelObject();
 
-                var assignedTo = task.getUser() != null ? task.getUser() : NOT_ASSIGNED;
-                var dueDate = task.getDueDate() != null ? task.getDueDate().toString() : NOT_ASSIGNED;
-                var buildingId = task.getProperty() != null ? task.getProperty().toString() : NOT_ASSIGNED;
-
 //                item.add(new Label("taskId", task.getId().toString()));
-                item.add(new Label("taskName", task.getName()));
+                item.add(new Label(TASK_NAME, task.getName()));
                 item.add(getStatusComponent(task));
                 item.add(getPriorityComponent(task));
-                item.add(new Label("taskAssignedTo", assignedTo));
-                item.add(new Label("taskDueDate", dueDate));
-                item.add(new Label("taskBuilding", buildingId));
+                item.add(getTaskAssignedToComponent(task));
+                item.add(getDateComponent(task));
+                item.add(getTaskPropertyComponent(task));
             }
         };
     }
 
-    static Component getStatusComponent(Task task) {
-        var status = task.getStatus() != null ? task.getStatus() : NOT_ASSIGNED;
-        if (status.equals(TaskStatus.COMPLETED)) {
-            return new Label("taskStatus", status.toString()).add(new AttributeAppender("class", "badge text-bg-success"));
-        } else {
-            return new Label("taskStatus", status.toString()).add(new AttributeAppender("class", "badge text-bg-light"));
+    static Component getPriorityComponent(Task task) {
+        if (task.getProperty() == null) {
+            return new Label(TASK_PRIORITY, NOT_ASSIGNED);
         }
+        var priorityCssClasses = switch (task.getPriority()) {
+            case HIGH -> "badge text-bg-warning";
+            case MEDIUM -> "badge text-bg-primary";
+            case LOW -> "badge text-bg-secondary";
+        };
+        return new Label(TASK_PRIORITY, task.getPriority().toString())
+                .add(new AttributeAppender("class", priorityCssClasses));
     }
 
-    static Component getPriorityComponent(Task task) {
-        var priority = task.getPriority() != null ? task.getPriority() : NOT_ASSIGNED;
-        if (priority.equals(TaskPriority.HIGH)) {
-            return new Label("taskPriority", priority.toString()).add(new AttributeAppender("class", "badge text-bg-warning"));
-        } else if (priority.equals(TaskPriority.MEDIUM)) {
-            return new Label("taskPriority", priority.toString()).add(new AttributeAppender("class", "badge text-bg-primary"));
-        } else if (priority.equals(TaskPriority.LOW)) {
-            return new Label("taskPriority", priority.toString()).add(new AttributeAppender("class", "badge text-bg-secondary"));
-        } else {
-            return new Label("taskPriority", priority);
+
+    static Component getStatusComponent(Task task) {
+        if (task.getStatus() == null) {
+            return new Label(TASK_STATUS, NOT_ASSIGNED);
         }
+
+        var statusCssClasses = switch (task.getStatus()) {
+            case COMPLETED -> "badge text-bg-success";
+            default -> "badge text-bg-secondary";
+        };
+
+        return new Label(TASK_STATUS, task.getStatus().toString())
+                .add(new AttributeAppender("class", statusCssClasses));
+    }
+
+    static Component getTaskAssignedToComponent(Task task) {
+        var assignedTo = task.getAssignedTo() != null ? task.getAssignedTo().name() : NOT_ASSIGNED;
+        return new Label(TASK_ASSIGNED_TO, assignedTo);
+    }
+
+    static Component getTaskPropertyComponent(Task task) {
+        var property = task.getProperty() != null ? task.getProperty().name() : NOT_ASSIGNED;
+        return new Label(TASK_PROPERTY, property);
+    }
+
+    static Component getDateComponent(Task task) {
+        var dueDate = task.getDueDate() != null ? DateUtils.formatDate(task.getDueDate()) : NOT_ASSIGNED;
+        return new Label(TASK_DUE_DATE, dueDate);
     }
 
 }

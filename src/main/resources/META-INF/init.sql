@@ -12,3 +12,8 @@ INSERT INTO tasks (id, name, priority, status, assigned_to, due_date, created_at
 INSERT INTO tasks (id, name, priority, status, assigned_to, due_date, created_at, updated_at, property_id) VALUES (3, 'Fixing some defects', 'LOW', 'ON_HOLD', 2, '2024-01-06', now(), now(), 2);
 INSERT INTO tasks (id, name, priority, status, assigned_to, due_date, created_at, updated_at, property_id) VALUES (4, 'Clean the windows', 'LOW', 'IN_PROGRESS', 2, '2024-01-11', now(), now(), 3);
 INSERT INTO tasks (id, name, priority, status, assigned_to, due_date, created_at, updated_at, property_id) VALUES (5, 'Clean the floor', 'LOW', 'IN_PROGRESS', 3, '2024-02-01', now(), now(), 4);
+
+
+SELECT setval('properties_id_seq', (SELECT MAX(id) from "properties"));
+SELECT setval('users_id_seq', (SELECT MAX(id) from "users"));
+SELECT setval('tasks_id_seq', (SELECT MAX(id) from "tasks"));

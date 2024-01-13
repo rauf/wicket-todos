@@ -10,26 +10,25 @@ public class Task implements Serializable {
     private String name;
     private TaskStatus status;
     private TaskPriority priority;
-    private String user;
+    private User assignedTo;
     private Date dueDate;
-    private String property;
+    private Property property;
     private Instant createdAt;
     private Instant updatedAt;
-
-
+    
     public Task() {
     }
 
     public Task(Long id, String name, TaskStatus status, TaskPriority priority,
-                String assignedToUserId, Date dueDate, String buildingId,
+                User assignedTo, Date dueDate, Property property,
                 Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.priority = priority;
-        this.user = assignedToUserId;
+        this.assignedTo = assignedTo;
         this.dueDate = dueDate;
-        this.property = buildingId;
+        this.property = property;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -76,19 +75,20 @@ public class Task implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public String getUser() {
-        return user;
+
+    public User getAssignedTo() {
+        return assignedTo;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setAssignedTo(User assignedTo) {
+        this.assignedTo = assignedTo;
     }
 
-    public String getProperty() {
+    public Property getProperty() {
         return property;
     }
 
-    public void setProperty(String property) {
+    public void setProperty(Property property) {
         this.property = property;
     }
 

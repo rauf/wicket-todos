@@ -22,11 +22,11 @@ public class TaskForm extends Panel implements Serializable {
     public static final String FIELD_TITLE = "name";
     public static final String PRIORITY_DROPDOWN = "priority";
     public static final String PROPERTY_DROPDOWN = "property";
-    public static final String USER_DROPDOWN = "user";
+    public static final String USER_DROPDOWN = "assignedTo";
 
     private Task task;
 
-    public TaskForm(String id, Task t, List<Property> propertyList, List<User> userList) {
+    public TaskForm(String id, Task t, List<Property> propertyList, List<User> userList, OnSubmitListener<Task> onSubmitListener) {
         super(id);
         this.task = t != null ? t : new Task();
 
@@ -46,7 +46,7 @@ public class TaskForm extends Panel implements Serializable {
             @Override
             public void onSubmit() {
                 System.out.println("Property: " + task.getProperty());
-
+                onSubmitListener.onSubmit(task);
                 setResponsePage(getPage().getClass()); // Refresh the page or navigate to another page
             }
         });

@@ -3,9 +3,10 @@ package in.rauf.services;
 import in.rauf.dao.PropertyDao;
 import in.rauf.models.Property;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PropertyService {
+public class PropertyService implements Serializable {
 
     private final PropertyDao propertyDao;
 

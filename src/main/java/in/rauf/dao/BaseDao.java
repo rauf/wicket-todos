@@ -4,11 +4,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Optional;
 
-public abstract class BaseDao<E, K> implements Dao<E, K> {
+public abstract class BaseDao<E, K> implements Dao<E, K>, Serializable {
     private static final String PERSISTENCE_UNIT_NAME = "DefaultPersistenceUnit";
     protected EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     protected Class entityClass;
@@ -52,7 +53,7 @@ public abstract class BaseDao<E, K> implements Dao<E, K> {
         var query = entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e");
         return query.getResultList();
     }
-    
+
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
