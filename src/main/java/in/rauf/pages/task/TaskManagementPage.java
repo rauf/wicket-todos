@@ -21,12 +21,8 @@ public class TaskManagementPage extends MainLayout implements Serializable {
         var propertyService = new PropertyService(new PropertyDao());
         var userService = new UserService(new UserDao());
         var taskService = new TaskService(new TaskDao());
-        var onSubmitListener = new OnSubmitListener<Task>() {
-            @Override
-            public void onSubmit(Task task) {
-                taskService.save(task);
-            }
-        };
+
+        OnSubmitListener<Task> onSubmitListener = taskService::save;
 
         var taskForm = new TaskForm("taskForm", null, propertyService.fetchAllProperties(), userService.fetchAllUsers(), onSubmitListener);
         var taskList = new TaskList("taskList", Model.ofList(taskService.fetchAllTasks()));

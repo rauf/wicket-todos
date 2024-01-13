@@ -1,38 +1,56 @@
 <wicket:panel xmlns:wicket="http://www.w3.org/1999/xhtml">
-    <form wicket:id="taskForm">
-        <div class="form-group row">
-            <label for="title" class="col-sm-2 col-form-label">Title</label>
-            <div class="col-sm-10">
-                <input class="form-control" id="title" wicket:id="name" placeholder="Task Title">
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <label for="title" class="col-sm-2 col-form-label">Priority</label>
-            <div class="col-sm-10">
-                <select class="input custom-select" id="priority" wicket:id="priority">
-                </select>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <label for="title" class="col-sm-2 col-form-label">Property</label>
-            <div class="col-sm-10">
-                <select class="input custom-select" id="property" wicket:id="property">
-                </select>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <label for="title" class="col-sm-2 col-form-label">User</label>
-            <div class="col-sm-10">
-                <select class="input custom-select" id="user" wicket:id="assignedTo">
-                </select>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary" wicket:id="actionButton">Add Task</button>
-            </div>
-        </div>
-    </form>
 
+    <button id="exampleModalCenterButton" type="button" class="btn btn-primary mt-3" data-toggle="modal"
+            data-target="#exampleModalCenter">
+        Add Task
+    </button>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add Task</h5>
+                </div>
+                <div class="modal-body">
+                    <form wicket:id="taskForm">
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-3 col-form-label">Title</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="title" wicket:id="name" placeholder="Task Title">
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label for="title" class="col-sm-3 col-form-label">Priority</label>
+                            <div class="col-sm-9">
+                                <select class="input custom-select" id="priority" wicket:id="priority">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label for="title" class="col-sm-3 col-form-label">Property</label>
+                            <div class="col-sm-9">
+                                <select class="input custom-select" id="property" wicket:id="property">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <label for="title" class="col-sm-3 col-form-label">User</label>
+                            <div class="col-sm-9">
+                                <select class="input custom-select" id="user" wicket:id="assignedTo">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-9">
+                                <button type="submit" class="btn btn-primary" wicket:id="actionButton">Add Task
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </wicket:panel>

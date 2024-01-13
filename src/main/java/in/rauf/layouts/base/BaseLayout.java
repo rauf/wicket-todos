@@ -15,7 +15,9 @@ public abstract class BaseLayout extends WebPage {
 
     public static final String POPPER_JS = "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js";
 
-    private static final String MAIN_CSS_URL = "/style.css";
+    private static final String CUSTOM_CSS_URL = "/style.css";
+
+    private static final String CUSTOM_JS_URL = "/script.js";
 
     @Override
     public void renderHead(IHeaderResponse response) {
@@ -24,11 +26,13 @@ public abstract class BaseLayout extends WebPage {
         response.render(JavaScriptReferenceHeaderItem.forUrl(BOOTSTRAP_JS_LINK));
 
         // Add custom CSS
-        response.render(CssReferenceHeaderItem.forUrl(MAIN_CSS_URL));
+        response.render(CssReferenceHeaderItem.forUrl(CUSTOM_CSS_URL));
 
         // Add Popper.js
         response.render(JavaScriptReferenceHeaderItem.forUrl(POPPER_JS));
 
+        // Add custom JS
+        response.render(JavaScriptReferenceHeaderItem.forUrl(CUSTOM_JS_URL).setDefer(true));
     }
 
 }
