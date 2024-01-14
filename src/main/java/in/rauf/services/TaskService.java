@@ -3,6 +3,7 @@ package in.rauf.services;
 import in.rauf.dao.TaskDao;
 import in.rauf.mappers.TaskMapper;
 import in.rauf.models.Task;
+import in.rauf.models.TaskStatus;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,5 +27,9 @@ public class TaskService implements Serializable {
     public void save(Task task) {
         var taskEntity = TaskMapper.mapModel(task);
         taskDao.persist(taskEntity);
+    }
+
+    public void updateStatus(Long id, TaskStatus taskStatus) {
+        taskDao.updateStatus(id, taskStatus);
     }
 }
