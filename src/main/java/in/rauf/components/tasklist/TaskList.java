@@ -24,12 +24,12 @@ import java.util.List;
 public class TaskList extends Panel implements Serializable {
 
     public static final String NOT_ASSIGNED = "-";
-    public static final String TASK_PRIORITY = "taskPriority";
-    public static final String TASK_ASSIGNED_TO = "taskAssignedTo";
-    public static final String TASK_PROPERTY = "taskProperty";
-    public static final String TASK_DUE_DATE = "taskDueDate";
-    public static final String TASK_NAME = "taskName";
-    public static final String STATUS_DROPDOWN = "statusDropdown";
+    public static final String ID_TASK_PRIORITY = "priority";
+    public static final String ID_TASK_ASSIGNED_TO = "assignedTo";
+    public static final String ID_TASK_PROPERTY = "property";
+    public static final String ID_TASK_DUE_DATE = "dueDate";
+    public static final String ID_TASK_NAME = "name";
+    public static final String ID_STATUS_DROPDOWN = "statusDropdown";
     public static final String EVENT_CHANGE = "change";
     public static final String DELETE_BUTTON = "deleteButton";
     public static final String ID_TASK_LIST = "taskList";
@@ -58,7 +58,7 @@ public class TaskList extends Panel implements Serializable {
     }
 
     private Component getStatusDropdownComponent(Task task, OnStatusChangeListener onStatusChangeListener) {
-        var statusDropdown = new DropDownChoice<>(STATUS_DROPDOWN, Arrays.asList(TaskStatus.values()));
+        var statusDropdown = new DropDownChoice<>(ID_STATUS_DROPDOWN, Arrays.asList(TaskStatus.values()));
         statusDropdown.setModel(new PropertyModel<>(task, "status"));
         statusDropdown.add(new AjaxFormComponentUpdatingBehavior(EVENT_CHANGE) {
             @Override
@@ -76,14 +76,14 @@ public class TaskList extends Panel implements Serializable {
 
     private static Component getPriorityComponent(Task task) {
         if (task.getPriority() == null) {
-            return new Label(TASK_PRIORITY, NOT_ASSIGNED);
+            return new Label(ID_TASK_PRIORITY, NOT_ASSIGNED);
         }
         var priorityCssClasses = switch (task.getPriority()) {
             case HIGH -> "badge text-bg-warning";
             case MEDIUM -> "badge text-bg-primary";
             case LOW -> "badge text-bg-secondary";
         };
-        return new Label(TASK_PRIORITY, task.getPriority().toString())
+        return new Label(ID_TASK_PRIORITY, task.getPriority().toString())
                 .add(new AttributeAppender("class", priorityCssClasses));
     }
 
@@ -104,20 +104,20 @@ public class TaskList extends Panel implements Serializable {
 
     private static Component getTaskAssignedToComponent(Task task) {
         var assignedTo = task.getAssignedTo() != null ? task.getAssignedTo().name() : NOT_ASSIGNED;
-        return new Label(TASK_ASSIGNED_TO, assignedTo);
+        return new Label(ID_TASK_ASSIGNED_TO, assignedTo);
     }
 
     private static Component getTaskPropertyComponent(Task task) {
         var property = task.getProperty() != null ? task.getProperty().name() : NOT_ASSIGNED;
-        return new Label(TASK_PROPERTY, property);
+        return new Label(ID_TASK_PROPERTY, property);
     }
 
     private static Component getDateComponent(Task task) {
         var dueDate = task.getDueDate() != null ? DateUtils.formatDate(task.getDueDate()) : NOT_ASSIGNED;
-        return new Label(TASK_DUE_DATE, dueDate);
+        return new Label(ID_TASK_DUE_DATE, dueDate);
     }
 
     private static Component getLabel(Task task) {
-        return new Label(TASK_NAME, task.getName());
+        return new Label(ID_TASK_NAME, task.getName());
     }
 }
