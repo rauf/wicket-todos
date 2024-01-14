@@ -4,6 +4,9 @@ import in.rauf.entities.TaskEntity;
 import in.rauf.models.TaskStatus;
 import jakarta.transaction.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskDao extends BaseDao<TaskEntity, Long> {
 
     public void updateStatus(Long id, TaskStatus taskStatus) {
@@ -42,4 +45,32 @@ public class TaskDao extends BaseDao<TaskEntity, Long> {
         });
     }
 
+    public List<TaskEntity> findAllFor(Long propertyId, Long userId) {
+        var entityManager = getEntityManager();
+        var conditions = new ArrayList<String>();
+
+        var query = new StringBuilder("FROM TaskEntity t");
+
+        if (propertyId != null || userId != null) {
+            query.append(" WHERE");
+        }
+        if (propertyId != null) {
+            conditions.add(" t.property.id = :propertyId");
+        }
+        if (userId != null) {
+            conditions.add(" t.assignedTo.id = :userId");
+        }
+
+        query.append(String.join(" AND", conditions));
+
+        var q = entityManager.createQuery(query.toString(), TaskEntity.class);
+
+        if (propertyId != null) {
+            q.setParameter("propertyId", propertyId);
+        }
+        if (userId != null) {
+            q.setParameter("userId", userId);
+        }
+        return q.getResultList();
+    }
 }

@@ -1,5 +1,7 @@
 package in.rauf.pages.task;
 
+import in.rauf.components.taskfilter.TaskFilter;
+import in.rauf.components.taskfilter.TaskFilters;
 import in.rauf.components.taskform.OnButtonClickListener;
 import in.rauf.components.taskform.TaskForm;
 import in.rauf.components.tasklist.OnStatusChangeListener;
@@ -8,21 +10,29 @@ import in.rauf.dao.PropertyDao;
 import in.rauf.dao.TaskDao;
 import in.rauf.dao.UserDao;
 import in.rauf.layouts.main.MainLayout;
+import in.rauf.models.Property;
 import in.rauf.models.Task;
+import in.rauf.models.User;
 import in.rauf.services.PropertyService;
 import in.rauf.services.TaskService;
 import in.rauf.services.UserService;
+import in.rauf.utils.NumberUtils;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TaskManagementPage extends MainLayout implements Serializable {
 
+    public static final String FILTER_USER_ID = "userId";
+    public static final String FILTER_PROPERTY_ID = "propertyId";
     private final TaskService taskService;
     private final PropertyService propertyService;
     private final UserService userService;
 
-    public TaskManagementPage() {
+    public TaskManagementPage(PageParameters parameters) {
+        super(parameters);
         propertyService = new PropertyService(new PropertyDao());
         userService = new UserService(new UserDao());
         taskService = new TaskService(new TaskDao());
@@ -31,11 +41,30 @@ public class TaskManagementPage extends MainLayout implements Serializable {
         OnButtonClickListener<Task> onDeleteListener = t -> taskService.delete(t.getId());
         OnStatusChangeListener onStatusChangeListener = taskService::updateStatus;
 
-        var taskForm = new TaskForm("taskForm", null, propertyService.fetchAllProperties(), userService.fetchAllUsers(), onSubmitListener);
-        var taskList = new TaskList("taskList", Model.ofList(taskService.fetchAllTasks()), onStatusChangeListener, onDeleteListener);
+        var allUsers = userService.fetchAllUsers();
+        var allProperties = propertyService.fetchAllProperties();
+
+        var filters = getCurrentFilterData(parameters, allUsers, allProperties);
+
+        var filteredTasks = taskService.fetchAllTasksForFilters(filters);
+
+        var taskForm = new TaskForm("taskForm", null, allProperties, allUsers, onSubmitListener);
+        var taskList = new TaskList("taskList", Model.ofList(filteredTasks), onStatusChangeListener, onDeleteListener);
+        var taskFilters = new TaskFilter("taskFilters", filters, allUsers, allProperties);
 
         add(taskForm);
         add(taskList);
+        add(taskFilters);
     }
+
+    public TaskFilters getCurrentFilterData(PageParameters parameters, List<User> userList, List<Property> propertyList) {
+        var userId = NumberUtils.parse(parameters.get(FILTER_USER_ID).toString());
+        var propertyId = NumberUtils.parse(parameters.get(FILTER_PROPERTY_ID).toString());
+
+        var user = userList.stream().filter(u -> u.id().equals(userId)).findFirst().orElse(null);
+        var property = propertyList.stream().filter(p -> p.id().equals(propertyId)).findFirst().orElse(null);
+        return new TaskFilters(user, property);
+    }
+
 
 }

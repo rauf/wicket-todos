@@ -97,7 +97,7 @@ public class TaskList extends Panel implements Serializable {
     }
 
     private void reloadPage() {
-        setResponsePage(getPage().getClass());
+        setResponsePage(getPage().getClass(), getPage().getPageParameters());
     }
 
     private static Component getTaskAssignedToComponent(Task task) {

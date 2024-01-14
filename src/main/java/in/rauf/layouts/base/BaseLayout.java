@@ -4,6 +4,8 @@ import org.apache.wicket.markup.head.CssReferenceHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptReferenceHeaderItem;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * A base layout to be used as a parent for the pages we're implementing. Common page configuration is done here.
@@ -18,6 +20,17 @@ public abstract class BaseLayout extends WebPage {
     private static final String CUSTOM_CSS_URL = "/style.css";
 
     private static final String CUSTOM_JS_URL = "/script.js";
+
+    public BaseLayout() {
+    }
+
+    public BaseLayout(IModel<?> model) {
+        super(model);
+    }
+
+    public BaseLayout(PageParameters parameters) {
+        super(parameters);
+    }
 
     @Override
     public void renderHead(IHeaderResponse response) {

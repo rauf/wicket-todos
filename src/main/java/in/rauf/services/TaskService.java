@@ -1,5 +1,6 @@
 package in.rauf.services;
 
+import in.rauf.components.taskfilter.TaskFilters;
 import in.rauf.dao.TaskDao;
 import in.rauf.mappers.TaskMapper;
 import in.rauf.models.Task;
@@ -18,6 +19,17 @@ public class TaskService implements Serializable {
 
     public List<Task> fetchAllTasks() {
         var taskEntities = taskDao.findAll();
+
+        return taskEntities.stream()
+                .map(TaskMapper::mapEntity)
+                .toList();
+    }
+
+    public List<Task> fetchAllTasksForFilters(TaskFilters filters) {
+        var propertyId = filters.getProperty() != null ? filters.getProperty().id() : null;
+        var userId = filters.getUser() != null ? filters.getUser().id() : null;
+
+        var taskEntities = taskDao.findAllFor(propertyId, userId);
 
         return taskEntities.stream()
                 .map(TaskMapper::mapEntity)
