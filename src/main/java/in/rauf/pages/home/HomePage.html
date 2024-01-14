@@ -1,5 +1,56 @@
 <wicket:extend xmlns:wicket="http://www.w3.org/1999/xhtml">
-    <div>
-        Home Page
-    </div>
+    <header class="bg-light text-dark text-center py-5">
+        <div class="container">
+            <h1 class="display-4">Discover Dream House Realty</h1>
+            <p class="lead">Your Journey to the Perfect Home Starts Here</p>
+        </div>
+    </header>
+
+    <section class="container mt-5">
+        <h2 class="text-center mb-4">Why Choose Dream House Realty?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="images/handshake.jpeg" class="card-img-top" alt="Handshake">
+                    <div class="card-body">
+                        <h5 class="card-title p-1">Personalized Property Matchmaking</h5>
+                        <p class="card-text">Our advanced algorithms understand your preferences, ensuring you find a
+                            property that feels like home from the moment you step in.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="images/compass.jpg" class="card-img-top" alt="Compass">
+                    <div class="card-body">
+                        <h5 class="card-title">Expert Guidance Every Step of the Way</h5>
+                        <p class="card-text">Our seasoned real estate professionals are here to guide you through the
+                            buying or selling process, making it a seamless and enjoyable experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="images/dreamhouse.jpg" class="card-img-top" alt="Dream House">
+                    <div class="card-body">
+                        <h5 class="card-title">Curated Selection of Dream Homes</h5>
+                        <p class="card-text">Explore a carefully curated selection of properties, each chosen for its
+                            unique charm, style, and potential to become your dream home.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-primary text-white py-5 mb-5">
+        <div class="container text-center">
+            <h2 class="display-4 mb-4">Start Your Journey Today</h2>
+            <p class="lead">Join Dream House Realty and experience a new era in real estate. Your dream home is just a
+                click away.</p>
+            <a class="btn btn-light btn-lg" wicket:id="redirectToTaskPageLink">Get Started</a>
+        </div>
+    </section>
+
 </wicket:extend>
