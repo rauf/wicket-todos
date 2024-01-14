@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name = "properties")
 public class PropertyEntity extends BaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "property")
@@ -25,7 +25,7 @@ public class PropertyEntity extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public List<TaskEntity> getTasks() {
         return tasks;
     }

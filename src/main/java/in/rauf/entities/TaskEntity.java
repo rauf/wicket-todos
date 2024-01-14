@@ -13,12 +13,12 @@ public class TaskEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "priority")
+    @Enumerated(EnumType.STRING)
     private TaskPriority priority;
 
     @ManyToOne

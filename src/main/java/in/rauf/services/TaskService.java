@@ -4,6 +4,7 @@ import in.rauf.components.taskfilter.TaskFilters;
 import in.rauf.dao.TaskDao;
 import in.rauf.mappers.TaskMapper;
 import in.rauf.models.Task;
+import in.rauf.models.TaskPriority;
 import in.rauf.models.TaskStatus;
 
 import java.io.Serializable;
@@ -39,6 +40,9 @@ public class TaskService implements Serializable {
     public void save(Task task) {
         var taskEntity = TaskMapper.mapModel(task);
         taskEntity.setStatus(TaskStatus.TODO);
+        if (taskEntity.getPriority() != null) {
+            taskEntity.setPriority(TaskPriority.MEDIUM);
+        }
         taskDao.persist(taskEntity);
     }
 
