@@ -1,5 +1,6 @@
 package in.rauf.pages.task;
 
+import in.rauf.components.status.StatusProgressComponent;
 import in.rauf.components.taskfilter.TaskFilter;
 import in.rauf.components.taskfilter.TaskFilters;
 import in.rauf.components.taskform.OnButtonClickListener;
@@ -31,6 +32,7 @@ public class TaskManagementPage extends MainLayout implements Serializable {
     public static final String ID_TASK_FORM = "taskForm";
     public static final String ID_TASK_LIST = "taskList";
     public static final String ID_TASK_FILTERS = "taskFilters";
+    public static final String ID_PROGRESS = "progress";
 
 
     private final TaskService taskService;
@@ -57,10 +59,12 @@ public class TaskManagementPage extends MainLayout implements Serializable {
         var taskForm = new TaskForm(ID_TASK_FORM, null, allProperties, allUsers, onSubmitListener);
         var taskList = new TaskList(ID_TASK_LIST, Model.ofList(filteredTasks), onStatusChangeListener, onDeleteListener);
         var taskFilters = new TaskFilter(ID_TASK_FILTERS, filters, allUsers, allProperties);
+        var progressBar = new StatusProgressComponent(ID_PROGRESS, filteredTasks);
 
         add(taskForm);
         add(taskList);
         add(taskFilters);
+        add(progressBar);
     }
 
     public TaskFilters getCurrentFilterData(PageParameters parameters, List<User> userList, List<Property> propertyList) {

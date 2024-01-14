@@ -1,0 +1,45 @@
+<wicket:panel xmlns:wicket="http://www.w3.org/1999/xhtml">
+    <div class="mt-4 mb-4">
+        <div class="row">
+            <div class="col-md-2 fs-6">Completed</div>
+            <div class="col-md-10">
+                <div class="progress mt-1 " role="progressbar" aria-label="Segment one" aria-valuemin="0"
+                     aria-valuemax="100">
+                    <div class="progress-bar bg-success" wicket:id="completed">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 fs-6">In Progress</div>
+            <div class="col-md-10">
+                <div class="progress mt-1 " role="progressbar" aria-label="Segment two" aria-valuemin="0"
+                     aria-valuemax="100">
+                    <div class="progress-bar bg-info" wicket:id="inProgress">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 fs-6">Todo</div>
+            <div class="col-md-10">
+
+                <div class="progress mt-1 " role="progressbar" aria-label="Segment three" aria-valuemin="0"
+                     aria-valuemax="100">
+                    <div class="progress-bar " wicket:id="todo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 fs-6">On Hold</div>
+            <div class="col-md-10">
+                <div class="progress mt-1 " role="progressbar" aria-label="Segment three" aria-valuemin="0"
+                     aria-valuemax="100">
+                    <div class="progress-bar bg-danger" wicket:id="hold">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</wicket:panel>
