@@ -32,6 +32,8 @@ public class TaskList extends Panel implements Serializable {
     public static final String STATUS_DROPDOWN = "statusDropdown";
     public static final String EVENT_CHANGE = "change";
     public static final String DELETE_BUTTON = "deleteButton";
+    public static final String ID_TASK_LIST = "taskList";
+    public static final String EVENT_CLICK = "click";
 
     public TaskList(String id, IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener, OnButtonClickListener<Task> onDeleteListener) {
         super(id, taskListModel);
@@ -39,7 +41,7 @@ public class TaskList extends Panel implements Serializable {
     }
 
     private ListView<Task> getTaskListView(IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener, OnButtonClickListener<Task> onDeleteListener) {
-        return new ListView<>("taskList", taskListModel) {
+        return new ListView<>(ID_TASK_LIST, taskListModel) {
             @Override
             protected void populateItem(ListItem<Task> item) {
                 var task = item.getModelObject();
@@ -87,7 +89,7 @@ public class TaskList extends Panel implements Serializable {
 
     private Component getDeleteButtonComponent(Task task, OnButtonClickListener<Task> onDeleteListener) {
         return new Button(DELETE_BUTTON)
-                .add(new AjaxFormComponentUpdatingBehavior("click") {
+                .add(new AjaxFormComponentUpdatingBehavior(EVENT_CLICK) {
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
                         onDeleteListener.onClick(task);

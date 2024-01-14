@@ -23,10 +23,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import java.io.Serializable;
 import java.util.List;
 
+import static in.rauf.components.taskfilter.TaskFilter.FILTER_PROPERTY_ID;
+import static in.rauf.components.taskfilter.TaskFilter.FILTER_USER_ID;
+
 public class TaskManagementPage extends MainLayout implements Serializable {
 
-    public static final String FILTER_USER_ID = "userId";
-    public static final String FILTER_PROPERTY_ID = "propertyId";
+    public static final String ID_TASK_FORM = "taskForm";
+    public static final String ID_TASK_LIST = "taskList";
+    public static final String ID_TASK_FILTERS = "taskFilters";
+
+
     private final TaskService taskService;
     private final PropertyService propertyService;
     private final UserService userService;
@@ -48,9 +54,9 @@ public class TaskManagementPage extends MainLayout implements Serializable {
 
         var filteredTasks = taskService.fetchAllTasksForFilters(filters);
 
-        var taskForm = new TaskForm("taskForm", null, allProperties, allUsers, onSubmitListener);
-        var taskList = new TaskList("taskList", Model.ofList(filteredTasks), onStatusChangeListener, onDeleteListener);
-        var taskFilters = new TaskFilter("taskFilters", filters, allUsers, allProperties);
+        var taskForm = new TaskForm(ID_TASK_FORM, null, allProperties, allUsers, onSubmitListener);
+        var taskList = new TaskList(ID_TASK_LIST, Model.ofList(filteredTasks), onStatusChangeListener, onDeleteListener);
+        var taskFilters = new TaskFilter(ID_TASK_FILTERS, filters, allUsers, allProperties);
 
         add(taskForm);
         add(taskList);

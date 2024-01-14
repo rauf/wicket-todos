@@ -19,10 +19,12 @@ import java.util.List;
 
 public class TaskForm extends Panel implements Serializable {
 
-    public static final String FIELD_TITLE = "name";
-    public static final String PRIORITY_DROPDOWN = "priority";
-    public static final String PROPERTY_DROPDOWN = "property";
-    public static final String USER_DROPDOWN = "assignedTo";
+    public static final String ID_TASK_FORM = "taskForm";
+    public static final String ID_TITLE = "name";
+    public static final String ID_PRIORITY_DROPDOWN = "priority";
+    public static final String ID_PROPERTY_DROPDOWN = "property";
+    public static final String ID_USER_DROPDOWN = "assignedTo";
+    public static final String ID_ACTION_BUTTON = "actionButton";
 
     private Task task;
 
@@ -30,24 +32,23 @@ public class TaskForm extends Panel implements Serializable {
         super(id);
         this.task = t != null ? t : new Task();
 
-        Form<Task> taskForm = new Form<>("taskForm", new CompoundPropertyModel<>(this.task));
+        Form<Task> taskForm = new Form<>(ID_TASK_FORM, new CompoundPropertyModel<>(this.task));
 
-        taskForm.add(new RequiredTextField<>(FIELD_TITLE));
+        taskForm.add(new RequiredTextField<>(ID_TITLE));
 //        taskForm.add(new DateTextField("dueDate"));
-        taskForm.add(new DropDownChoice<>(PRIORITY_DROPDOWN, Arrays.asList(TaskPriority.values())));
+        taskForm.add(new DropDownChoice<>(ID_PRIORITY_DROPDOWN, Arrays.asList(TaskPriority.values())));
 
-        var propertyDropDown = new DropDownChoice<>(PROPERTY_DROPDOWN, propertyList, new PropertyChoiceRenderer());
-        var userDropDown = new DropDownChoice<>(USER_DROPDOWN, userList, new UserChoiceRenderer());
+        var propertyDropDown = new DropDownChoice<>(ID_PROPERTY_DROPDOWN, propertyList, new PropertyChoiceRenderer());
+        var userDropDown = new DropDownChoice<>(ID_USER_DROPDOWN, userList, new UserChoiceRenderer());
 
         taskForm.add(userDropDown);
         taskForm.add(propertyDropDown);
 
-        taskForm.add(new Button("actionButton") {
+        taskForm.add(new Button(ID_ACTION_BUTTON) {
             @Override
             public void onSubmit() {
-                System.out.println("Property: " + task.getProperty());
                 onSubmitListener.onClick(task);
-                setResponsePage(getPage().getClass()); // Refresh the page or navigate to another page
+                setResponsePage(getPage().getClass());
             }
         });
 

@@ -18,13 +18,20 @@ import java.util.List;
 
 public class TaskFilter extends Panel {
 
+    public static final String FILTER_USER_ID = "userId";
+    public static final String FILTER_PROPERTY_ID = "propertyId";
+    public static final String ID_FILTER_FORM = "filterForm";
+    public static final String ID_USER = "user";
+    public static final String ID_PROPERTY = "property";
+    public static final String EVENT_CHANGE = "change";
+
     private TaskFilters taskFilters;
 
     public TaskFilter(String id, TaskFilters currentFilters, List<User> userList, List<Property> propertyList) {
         super(id);
         this.taskFilters = currentFilters;
 
-        Form<TaskFilters> taskForm = new Form<>("filterForm", new CompoundPropertyModel<>(this.taskFilters));
+        Form<TaskFilters> taskForm = new Form<>(ID_FILTER_FORM, new CompoundPropertyModel<>(this.taskFilters));
 
         taskForm.add(getUserDropdownComponent(userList));
         taskForm.add(getPropertyDropdownComponent(propertyList));
@@ -32,8 +39,8 @@ public class TaskFilter extends Panel {
     }
 
     private Component getUserDropdownComponent(List<User> userList) {
-        var userDropDown = new DropDownChoice<>("user", userList, new UserChoiceRenderer());
-        userDropDown.add(new AjaxFormComponentUpdatingBehavior("change") {
+        var userDropDown = new DropDownChoice<>(ID_USER, userList, new UserChoiceRenderer());
+        userDropDown.add(new AjaxFormComponentUpdatingBehavior(EVENT_CHANGE) {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 setResponsePage(TaskManagementPage.class, preparePageParameters());
@@ -43,8 +50,8 @@ public class TaskFilter extends Panel {
     }
 
     private Component getPropertyDropdownComponent(List<Property> propertyList) {
-        var propertyDropDown = new DropDownChoice<>("property", propertyList, new PropertyChoiceRenderer());
-        propertyDropDown.add(new AjaxFormComponentUpdatingBehavior("change") {
+        var propertyDropDown = new DropDownChoice<>(ID_PROPERTY, propertyList, new PropertyChoiceRenderer());
+        propertyDropDown.add(new AjaxFormComponentUpdatingBehavior(EVENT_CHANGE) {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 setResponsePage(TaskManagementPage.class, preparePageParameters());
@@ -56,10 +63,10 @@ public class TaskFilter extends Panel {
     private PageParameters preparePageParameters() {
         PageParameters parameters = new PageParameters();
         if (taskFilters.getUser() != null) {
-            parameters.add(TaskManagementPage.FILTER_USER_ID, taskFilters.getUser().id());
+            parameters.add(FILTER_USER_ID, taskFilters.getUser().id());
         }
         if (taskFilters.getProperty() != null) {
-            parameters.add(TaskManagementPage.FILTER_PROPERTY_ID, taskFilters.getProperty().id());
+            parameters.add(FILTER_PROPERTY_ID, taskFilters.getProperty().id());
         }
         return parameters;
     }
