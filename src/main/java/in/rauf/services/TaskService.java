@@ -40,7 +40,7 @@ public class TaskService implements Serializable {
     public void save(Task task) {
         var taskEntity = TaskMapper.mapModel(task);
         taskEntity.setStatus(TaskStatus.TODO);
-        if (taskEntity.getPriority() != null) {
+        if (taskEntity.getPriority() == null) {
             taskEntity.setPriority(TaskPriority.MEDIUM);
         }
         taskDao.persist(taskEntity);

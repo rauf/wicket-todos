@@ -6,6 +6,7 @@ import in.rauf.models.Property;
 import in.rauf.models.Task;
 import in.rauf.models.TaskPriority;
 import in.rauf.models.User;
+import org.apache.wicket.extensions.markup.html.form.DateTextField;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -25,6 +26,7 @@ public class TaskForm extends Panel implements Serializable {
     public static final String ID_PROPERTY_DROPDOWN = "property";
     public static final String ID_USER_DROPDOWN = "assignedTo";
     public static final String ID_ACTION_BUTTON = "actionButton";
+    public static final String ID_DUE_DATE = "dueDate";
 
     private Task task;
 
@@ -35,7 +37,7 @@ public class TaskForm extends Panel implements Serializable {
         Form<Task> taskForm = new Form<>(ID_TASK_FORM, new CompoundPropertyModel<>(this.task));
 
         taskForm.add(new RequiredTextField<>(ID_TITLE));
-//        taskForm.add(new DateTextField("dueDate"));
+        taskForm.add(new DateTextField(ID_DUE_DATE, "yyyy-MM-dd"));
         taskForm.add(new DropDownChoice<>(ID_PRIORITY_DROPDOWN, Arrays.asList(TaskPriority.values())));
 
         var propertyDropDown = new DropDownChoice<>(ID_PROPERTY_DROPDOWN, propertyList, new PropertyChoiceRenderer());
