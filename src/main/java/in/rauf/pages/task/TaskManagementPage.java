@@ -1,6 +1,6 @@
 package in.rauf.pages.task;
 
-import in.rauf.components.taskform.OnSubmitListener;
+import in.rauf.components.taskform.OnButtonClickListener;
 import in.rauf.components.taskform.TaskForm;
 import in.rauf.components.tasklist.OnStatusChangeListener;
 import in.rauf.components.tasklist.TaskList;
@@ -27,11 +27,12 @@ public class TaskManagementPage extends MainLayout implements Serializable {
         userService = new UserService(new UserDao());
         taskService = new TaskService(new TaskDao());
 
-        OnSubmitListener<Task> onSubmitListener = taskService::save;
+        OnButtonClickListener<Task> onSubmitListener = taskService::save;
+        OnButtonClickListener<Task> onDeleteListener = t -> taskService.delete(t.getId());
         OnStatusChangeListener onStatusChangeListener = taskService::updateStatus;
 
         var taskForm = new TaskForm("taskForm", null, propertyService.fetchAllProperties(), userService.fetchAllUsers(), onSubmitListener);
-        var taskList = new TaskList("taskList", Model.ofList(taskService.fetchAllTasks()), onStatusChangeListener);
+        var taskList = new TaskList("taskList", Model.ofList(taskService.fetchAllTasks()), onStatusChangeListener, onDeleteListener);
 
         add(taskForm);
         add(taskList);

@@ -32,4 +32,8 @@ public class TaskService implements Serializable {
     public void updateStatus(Long id, TaskStatus taskStatus) {
         taskDao.updateStatus(id, taskStatus);
     }
+
+    public void delete(Long id) {
+        taskDao.delete(id);
+    }
 }

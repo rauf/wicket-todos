@@ -1,7 +1,10 @@
 package in.rauf.entities;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.List;
 
@@ -12,8 +15,8 @@ public class PropertyEntity extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL)
-    private List<TaskEntity> projects;
+    @OneToMany(mappedBy = "property")
+    private List<TaskEntity> tasks;
 
     public String getName() {
         return name;
@@ -22,14 +25,13 @@ public class PropertyEntity extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<TaskEntity> getProjects() {
-        return projects;
+    
+    public List<TaskEntity> getTasks() {
+        return tasks;
     }
 
-    public void setProjects(List<TaskEntity> projects) {
-        this.projects = projects;
+    public void setTasks(List<TaskEntity> tasks) {
+        this.tasks = tasks;
     }
-
 }
 

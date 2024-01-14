@@ -1,5 +1,6 @@
 package in.rauf.components.tasklist;
 
+import in.rauf.components.taskform.OnButtonClickListener;
 import in.rauf.models.Task;
 import in.rauf.models.TaskStatus;
 import in.rauf.utils.DateUtils;
@@ -8,6 +9,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -29,13 +31,14 @@ public class TaskList extends Panel implements Serializable {
     public static final String TASK_NAME = "taskName";
     public static final String STATUS_DROPDOWN = "statusDropdown";
     public static final String EVENT_CHANGE = "change";
+    public static final String DELETE_BUTTON = "deleteButton";
 
-    public TaskList(String id, IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener) {
+    public TaskList(String id, IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener, OnButtonClickListener<Task> onDeleteListener) {
         super(id, taskListModel);
-        add(getTaskListView(taskListModel, onStatusChangeListener));
+        add(getTaskListView(taskListModel, onStatusChangeListener, onDeleteListener));
     }
 
-    private static ListView<Task> getTaskListView(IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener) {
+    private ListView<Task> getTaskListView(IModel<List<Task>> taskListModel, OnStatusChangeListener onStatusChangeListener, OnButtonClickListener<Task> onDeleteListener) {
         return new ListView<>("taskList", taskListModel) {
             @Override
             protected void populateItem(ListItem<Task> item) {
@@ -47,11 +50,12 @@ public class TaskList extends Panel implements Serializable {
                 item.add(getDateComponent(task));
                 item.add(getTaskPropertyComponent(task));
                 item.add(getStatusDropdownComponent(task, onStatusChangeListener));
+                item.add(getDeleteButtonComponent(task, onDeleteListener));
             }
         };
     }
 
-    private static Component getStatusDropdownComponent(Task task, OnStatusChangeListener onStatusChangeListener) {
+    private Component getStatusDropdownComponent(Task task, OnStatusChangeListener onStatusChangeListener) {
         var statusDropdown = new DropDownChoice<>(STATUS_DROPDOWN, Arrays.asList(TaskStatus.values()));
         statusDropdown.setModel(new PropertyModel<>(task, "status"));
         statusDropdown.add(new AjaxFormComponentUpdatingBehavior(EVENT_CHANGE) {
@@ -62,14 +66,14 @@ public class TaskList extends Panel implements Serializable {
                     return;
                 }
                 onStatusChangeListener.onStatusChange(task.getId(), selectedValue);
-                target.appendJavaScript("window.location.reload();");
+                reloadPage();
             }
         });
         return statusDropdown;
     }
 
     private static Component getPriorityComponent(Task task) {
-        if (task.getProperty() == null) {
+        if (task.getPriority() == null) {
             return new Label(TASK_PRIORITY, NOT_ASSIGNED);
         }
         var priorityCssClasses = switch (task.getPriority()) {
@@ -81,6 +85,20 @@ public class TaskList extends Panel implements Serializable {
                 .add(new AttributeAppender("class", priorityCssClasses));
     }
 
+    private Component getDeleteButtonComponent(Task task, OnButtonClickListener<Task> onDeleteListener) {
+        return new Button(DELETE_BUTTON)
+                .add(new AjaxFormComponentUpdatingBehavior("click") {
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        onDeleteListener.onClick(task);
+                        reloadPage();
+                    }
+                });
+    }
+
+    private void reloadPage() {
+        setResponsePage(getPage().getClass());
+    }
 
     private static Component getTaskAssignedToComponent(Task task) {
         var assignedTo = task.getAssignedTo() != null ? task.getAssignedTo().name() : NOT_ASSIGNED;

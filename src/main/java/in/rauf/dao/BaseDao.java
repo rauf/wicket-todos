@@ -29,10 +29,22 @@ public abstract class BaseDao<E, K> implements Dao<E, K>, Serializable {
 
     @Override
     public void remove(E entity) {
-        var entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(entity);
-        entityManager.getTransaction().commit();
+        var em = getEntityManager();
+        var transaction = em.getTransaction();
+
+        try {
+            transaction.begin();
+            if (!em.contains(entity)) {
+                entity = em.merge(entity);
+            }
+            em.remove(entity);
+            em.flush();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -26,7 +26,7 @@ public class TaskForm extends Panel implements Serializable {
 
     private Task task;
 
-    public TaskForm(String id, Task t, List<Property> propertyList, List<User> userList, OnSubmitListener<Task> onSubmitListener) {
+    public TaskForm(String id, Task t, List<Property> propertyList, List<User> userList, OnButtonClickListener<Task> onSubmitListener) {
         super(id);
         this.task = t != null ? t : new Task();
 
@@ -46,7 +46,7 @@ public class TaskForm extends Panel implements Serializable {
             @Override
             public void onSubmit() {
                 System.out.println("Property: " + task.getProperty());
-                onSubmitListener.onSubmit(task);
+                onSubmitListener.onClick(task);
                 setResponsePage(getPage().getClass()); // Refresh the page or navigate to another page
             }
         });
