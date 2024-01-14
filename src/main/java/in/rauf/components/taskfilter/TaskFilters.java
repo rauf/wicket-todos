@@ -3,7 +3,9 @@ package in.rauf.components.taskfilter;
 import in.rauf.models.Property;
 import in.rauf.models.User;
 
-public class TaskFilters {
+import java.io.Serializable;
+
+public class TaskFilters implements Serializable {
     private User user;
     private Property property;
 

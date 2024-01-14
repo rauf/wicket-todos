@@ -38,6 +38,7 @@ public class TaskService implements Serializable {
 
     public void save(Task task) {
         var taskEntity = TaskMapper.mapModel(task);
+        taskEntity.setStatus(TaskStatus.TODO);
         taskDao.persist(taskEntity);
     }
 

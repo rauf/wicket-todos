@@ -1,10 +1,17 @@
 <wicket:panel xmlns:wicket="http://www.w3.org/1999/xhtml">
     <form wicket:id="filterForm">
-        <select class="input custom-select" wicket:id="property">
-        </select>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Select Property</label>
+                <select class="form-select form-select-md" wicket:id="property">
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label>Select User</label>
+                <select class="form-select form-select-md" wicket:id="user">
+                </select>
+            </div>
+        </div>
 
-        <select class="input custom-select" wicket:id="user">
-
-        </select>
     </form>
 </wicket:panel>
