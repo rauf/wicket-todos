@@ -10,6 +10,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  */
 public abstract class MainLayout extends BaseLayout {
 
+    public static final String ID_NAVBAR = "navbar";
+    public static final String ID_FOOTER = "footer";
+
     public MainLayout() {
         initialize();
     }
@@ -20,8 +23,8 @@ public abstract class MainLayout extends BaseLayout {
     }
 
     void initialize() {
-        var navbar = new Navbar("navbar");
-        var footer = new Footer("footer");
+        var navbar = new Navbar(ID_NAVBAR);
+        var footer = new Footer(ID_FOOTER);
         add(navbar);
         add(footer);
     }
