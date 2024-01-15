@@ -1,25 +1,11 @@
 package in.rauf.services;
 
-import in.rauf.dao.UserDao;
 import in.rauf.models.User;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class UserService implements Serializable {
-
-    private final UserDao userDao;
-
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public List<User> fetchAllUsers() {
-        var userEntities = userDao.findAll();
-
-        return userEntities.stream()
-                .map(ue -> new User(ue.getId(), ue.getName(), ue.getEmail()))
-                .toList();
-    }
+public interface UserService extends Serializable {
+    List<User> fetchAllUsers();
 
 }

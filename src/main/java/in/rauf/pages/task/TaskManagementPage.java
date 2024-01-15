@@ -17,6 +17,9 @@ import in.rauf.models.User;
 import in.rauf.services.PropertyService;
 import in.rauf.services.TaskService;
 import in.rauf.services.UserService;
+import in.rauf.services.impl.DefaultPropertyService;
+import in.rauf.services.impl.DefaultTaskService;
+import in.rauf.services.impl.DefaultUserService;
 import in.rauf.utils.NumberUtils;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -34,16 +37,16 @@ public class TaskManagementPage extends MainLayout implements Serializable {
     public static final String ID_TASK_FILTERS = "taskFilters";
     public static final String ID_PROGRESS = "progress";
 
-
+    
     private final TaskService taskService;
     private final PropertyService propertyService;
     private final UserService userService;
 
     public TaskManagementPage(PageParameters parameters) {
         super(parameters);
-        propertyService = new PropertyService(new PropertyDao());
-        userService = new UserService(new UserDao());
-        taskService = new TaskService(new TaskDao());
+        propertyService = new DefaultPropertyService(new PropertyDao());
+        userService = new DefaultUserService(new UserDao());
+        taskService = new DefaultTaskService(new TaskDao());
 
         OnButtonClickListener<Task> onSubmitListener = taskService::save;
         OnButtonClickListener<Task> onDeleteListener = t -> taskService.delete(t.getId());
