@@ -38,6 +38,6 @@ application also allows to filter tasks based on Property and the User.
 
 1. Ability to edit tasks can be added.
 2. Add a dependency injection framework like Guice or Spring when the application grows.
-3. Add ability to add new users and properties.
+3. Add ability to add/edit users and properties.
 4. Add ability to paginate tasks instead of showing the full list of tasks.
 
