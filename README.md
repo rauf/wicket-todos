@@ -2,7 +2,10 @@
 
 ## Overview
 
-Task Management Application is designed to help you organize the the tasks assigned to each property and user.
+Task Management Application is designed to help you organize the tasks for each property and user. The
+application also allows to filter tasks based on Property and the User.
+
+![Task Page](./images/taskpage.png)
 
 ## Technologies used
 
