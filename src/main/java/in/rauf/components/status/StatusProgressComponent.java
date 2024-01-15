@@ -6,7 +6,6 @@ import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.Model;
 
 import java.util.List;
 import java.util.Map;
@@ -36,7 +35,7 @@ public class StatusProgressComponent extends Panel {
         var field = new Label(id);
         var percentWidth = taskProgressPercentages.getOrDefault(status, 0.0);
         field.add(AttributeModifier.append("style", "width:" + percentWidth + "%"));
-        field.setDefaultModel(Model.of(status.name()));
+//        field.setDefaultModel(Model.of(status.name()));
         return field;
     }
 
